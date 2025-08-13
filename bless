@@ -11,7 +11,7 @@ print_time_in_center() {
 	cols=$(tput cols)
 	# calculate position
 	row=$((rows/2))
-	col=$(( (cols - ${#text})/2 ))
+	col=$(( (cols - 5)/2 ))
 	# move cursor
 	tput clear
 	tput cup $row $col
