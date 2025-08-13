@@ -46,8 +46,8 @@ chmodden() {
 	echo -e 'chmodded.'
 }
 success_msg() {
-	echo -e 'success!
-	run bless to bless yourself with a timer'
+echo -e 'success!
+run bless to bless yourself with a timer'
 	exit 0
 }
 

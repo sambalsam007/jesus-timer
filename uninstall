@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo -e 'are you sure? y/n : '
+read yn
+if [[ $yn == 'y' ]] ; then
+	rm $HOME/.local/bin/bless
+	echo -e 'have fun in hell'
+	exit 666
+else
+	echo -e 'smart'
+	exit 7
+fi
