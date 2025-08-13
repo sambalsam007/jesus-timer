@@ -1,0 +1,56 @@
+#!/bin/bash
+echo -e 'holy installation'
+
+
+jesus_timer_directory=$(pwd)
+local_bin="$HOME/.local/bin"
+
+store_location() {
+	local dot_local_file="$HOME/.local/jesus-timer"
+
+	mkdir -p "$dot_local_file"
+	echo -e "$jesus_timer_directory" > "$dot_local_file/location"
+	[ $? != 0 ] && echo -e "error $FUNCNAME" && exit 1
+}
+check_local_bin() {
+	echo -e "$PATH" | grep "$local_bin" >/dev/null 2>&1
+	if [ $? != 0 ]; then
+		echo -e "first add $local_bin to your \$PATH!"
+		exit 1
+	fi
+	return 0
+}
+does_symlink_exist() {
+	if [[ -f "$local_bin/bless" ]]; then
+		echo -e "error: $local_bin/bless exists."
+		echo -ne "remove it? y/n : "
+		read yn
+		[[ $yn == "y" ]] && rm "$local_bin/bless" && echo 'removed...'
+		[[ $yn != "y" ]] && echo 'keep it. exit install.' && exit 1
+	fi
+}
+make_symlink() {
+	does_symlink_exist
+	ln -s "$jesus_timer_directory/bless" "$local_bin/bless"
+	if [ $? == 0 ]; then
+		echo -e "created symlink in $local_bin"
+		return 0
+	else
+		echo -e 'error'
+		exit 1
+	fi
+}
+chmodden() {
+	chmod +x "$jesus_timer_directory/bless"
+	[ $? != 0 ] && echo -e "error $FUNCNAME" && exit 1
+	echo -e 'chmodded.'
+}
+success_msg() {
+	echo -e 'success!
+	run bless to bless yourself with a timer'
+	exit 0
+}
+
+store_location
+check_local_bin && make_symlink && chmodden
+success_msg

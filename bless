@@ -1,0 +1,45 @@
+#!/bin/bash
+
+### functions ###
+reset() {
+	clear
+	time=$((og_time + 1 ))
+}
+print_time() {
+	echo -ne "\r\033[K $((time / 60)):$((time % 60))"
+}
+timer() {
+	clear
+	while [[ $time > 0 ]]; do
+		print_time
+		read -t 1 && reset
+		((time--))
+	done
+	open "$picture"
+	echo -ne "\r\033[K"
+	echo -ne "done : $((og_time / 60))m"
+	reset && timer
+}
+manual() {
+echo '
+...(empty)	start timer for 30 minutes
+666		start timer for 666 minutes
+(x)		start timer for (x) minutes
+
+'
+}
+
+### some variables ###
+dot_local_file="$HOME/.local/jesus-timer"
+repo_dir="$(cat $dot_local_file/location)"
+picture="$repo_dir/jesus.jpg"
+
+### input variables ###
+input_time="$1"
+[[ "$input_time" == "man" ]] && manual && exit
+[[ -z "$input_time" ]] && input_time=30
+time=$((input_time * 60))
+og_time=$time
+
+### program ###
+timer
