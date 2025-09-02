@@ -44,7 +44,7 @@ echo '
 ### some variables ###
 dot_local_file="$HOME/.local/jesus-timer"
 repo_dir="$(cat $dot_local_file/location)"
-picture="$repo_dir/jesus.jpg"
+picture="$HOME/darth-vader.jpg"
 
 ### input variables ###
 input_time="$1"
